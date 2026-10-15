@@ -15,8 +15,10 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
-app.use("/api/auth", authRoutes);
 
+import propertyRoutes from "./routes/propertyRoutes.js";
+app.use("/api/auth", authRoutes);
+app.use("/api/properties", propertyRoutes);
 app.use(notFound);
 app.use(errorHandler);
 

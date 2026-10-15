@@ -20,6 +20,19 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+export const optionalAuth = asyncHandler(async (req, res, next) => {
+  const header = req.headers.authorization;
+  if (header && header.startsWith("Bearer ")) {
+    try {
+      const decoded = jwt.verify(header.split(" ")[1], process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id);
+    } catch {
+      // ignore invalid token, treat as anonymous
+    }
+  }
+  next();
+});
+
 // Checks that the user has one of the allowed roles
 export const authorize =
   (...roles) =>
