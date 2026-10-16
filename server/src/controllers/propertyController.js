@@ -1,4 +1,4 @@
-
+import Watchlist from "../models/watchlist.js";
 import { z } from "zod";
 import Property, { PROPERTY_TYPES } from "../models/property.js";
 import asyncHandler from "../utils/asyncHandler.js";
@@ -187,6 +187,7 @@ export const deleteProperty = asyncHandler(async (req, res) => {
   if (!isOwnerOrAdmin(property, req.user)) {
     return res.status(403).json({ message: "You can only delete your own listings" });
   }
+  await Watchlist.deleteMany({ property: property._id });
   await property.deleteOne();
   res.json({ message: "Property deleted" });
 });

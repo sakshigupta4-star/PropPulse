@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
 
 const app = express();
@@ -19,6 +20,8 @@ app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 import propertyRoutes from "./routes/propertyRoutes.js";
 app.use("/api/auth", authRoutes);
 app.use("/api/properties", propertyRoutes);
+app.use("/api/watchlist", watchlistRoutes);
+
 app.use(notFound);
 app.use(errorHandler);
 

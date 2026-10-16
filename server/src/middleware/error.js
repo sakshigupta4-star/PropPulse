@@ -11,9 +11,10 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
   // Duplicate email
-  if (err.code === 11000) {
-    return res.status(409).json({ message: "Email already registered" });
-  }
+ if (err.code === 11000) {
+  const field = Object.keys(err.keyPattern || {})[0] || "value";
+  return res.status(409).json({ message: `Duplicate ${field}` });
+}
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || "Server error" });
 
