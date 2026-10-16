@@ -8,6 +8,7 @@ import watchlistRoutes from "./routes/watchlistRoutes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
 import builderRoutes from "./routes/builderRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import marketRoutes from "./routes/marketRoutes.js";
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/properties", propertyRoutes);
 app.use("/api/watchlist", watchlistRoutes);
 app.use("/api/builders", builderRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/market", marketRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
