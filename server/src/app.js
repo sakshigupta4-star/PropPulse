@@ -6,6 +6,9 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import watchlistRoutes from "./routes/watchlistRoutes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
+import builderRoutes from "./routes/builderRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+
 
 const app = express();
 
@@ -21,6 +24,8 @@ import propertyRoutes from "./routes/propertyRoutes.js";
 app.use("/api/auth", authRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/watchlist", watchlistRoutes);
+app.use("/api/builders", builderRoutes);
+app.use("/api/projects", projectRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
