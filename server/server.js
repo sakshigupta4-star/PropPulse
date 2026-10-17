@@ -1,24 +1,18 @@
-
 import "dotenv/config";
-import dns from "node:dns";
+import http from "http";
 import mongoose from "mongoose";
 import app from "./src/app.js";
+import { initSocket } from "./src/socket.js";
 
-// Fix for MongoDB Atlas DNS lookup issues
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
+const server = http.createServer(app);
+initSocket(server);
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-
-    const PORT = process.env.PORT || 5000;
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
+    server.listen(process.env.PORT, () =>
+      console.log(`Server running on port ${process.env.PORT}`)
+    );
   })
-  .catch((err) => {
-    console.error("DB connection failed:", err.message);
-    process.exit(1);
-  });
+  .catch((err) => console.error("DB connection failed:", err.message));
