@@ -11,6 +11,7 @@ import projectRoutes from "./routes/projectRoutes.js";
 import marketRoutes from "./routes/marketRoutes.js";
 import investmentRoutes from "./routes/investmentRoutes.js";
 import portfolioRoutes from "./routes/portfolioRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/market", marketRoutes);
 app.use("/api/investment", investmentRoutes);
 app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
