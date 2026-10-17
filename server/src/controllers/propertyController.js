@@ -1,3 +1,4 @@
+import { notify } from "../utils/notify.js";
 import Watchlist from "../models/watchlist.js";
 import { z } from "zod";
 import Property, { PROPERTY_TYPES } from "../models/property.js";
@@ -200,5 +201,16 @@ export const adminUpdateProperty = asyncHandler(async (req, res) => {
     runValidators: true,
   });
   if (!property) return res.status(404).json({ message: "Property not found" });
+  if (data.status === "approved" || data.status === "rejected") {
+    const approved = data.status === "approved";
+    await notify(property.owner, {
+      type: approved ? "property_approved" : "property_rejected",
+      title: approved ? "Your listing is live" : "Your listing was rejected",
+      message: approved
+        ? `"${property.title}" has been approved.`
+        : `"${property.title}" was rejected. ${data.rejectionReason || ""}`.trim(),
+      link: `/properties/${property._id}`,
+    });
+  }
   res.json({ property });
 });
