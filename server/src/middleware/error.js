@@ -15,6 +15,10 @@ export const errorHandler = (err, req, res, next) => {
   const field = Object.keys(err.keyPattern || {})[0] || "value";
   return res.status(409).json({ message: `Duplicate ${field}` });
 }
+
+  if (err.name === "MulterError") {
+    return res.status(400).json({ message: err.message });
+  }
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || "Server error" });
 
